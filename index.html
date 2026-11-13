@@ -1,155 +1,243 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MOCLIPS - Crea tus clips</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MOCLIPS</title>
 
-    <style>
-        * {
-            box-sizing: border-box;
-        }
+<style>
+* {
+    box-sizing: border-box;
+}
 
-        body {
-            margin: 0;
-            font-family: Arial, sans-serif;
-            background: #080b10;
-            color: white;
-            text-align: center;
-            padding: 30px 18px;
-        }
+body {
+    margin: 0;
+    padding: 25px 15px;
+    background: #080b10;
+    color: white;
+    font-family: Arial, sans-serif;
+}
 
-        .container {
-            max-width: 600px;
-            margin: 60px auto;
-            background: #121923;
-            padding: 30px 20px;
-            border-radius: 18px;
-            border: 1px solid #263342;
-        }
+.container {
+    max-width: 650px;
+    margin: 35px auto;
+    text-align: center;
+    background: #121923;
+    padding: 30px 20px;
+    border-radius: 18px;
+    border: 1px solid #263342;
+}
 
-        h1 {
-            font-size: 42px;
-            color: #00e676;
-            margin-bottom: 10px;
-        }
+.logo {
+    font-size: 42px;
+    color: #00e676;
+    font-weight: bold;
+}
 
-        .subtitle {
-            color: #b8c2cc;
-            margin-bottom: 30px;
-        }
+.subtitle {
+    color: #aab5c0;
+    margin-bottom: 30px;
+}
 
-        input {
-            width: 100%;
-            padding: 16px;
-            border-radius: 10px;
-            border: 1px solid #394858;
-            background: #080b10;
-            color: white;
-            font-size: 15px;
-            margin-bottom: 15px;
-        }
+h2 {
+    font-size: 20px;
+}
 
-        button {
-            width: 100%;
-            padding: 16px;
-            background: #00e676;
-            color: #06120b;
-            font-weight: bold;
-            font-size: 17px;
-            border: none;
-            border-radius: 10px;
-            cursor: pointer;
-        }
+.options {
+    display: flex;
+    gap: 12px;
+    margin: 20px 0;
+}
 
-        button:active {
-            transform: scale(0.98);
-        }
+.option {
+    flex: 1;
+    padding: 18px 8px;
+    background: #202c39;
+    border: 2px solid #344454;
+    border-radius: 12px;
+    color: white;
+    cursor: pointer;
+    font-size: 15px;
+}
 
-        #resultado {
-            margin-top: 22px;
-            color: #00e676;
-            line-height: 1.5;
-            overflow-wrap: anywhere;
-        }
+.option.active {
+    border-color: #00e676;
+    background: #153526;
+}
 
-        .footer {
-            margin-top: 35px;
-            color: #788593;
-            font-size: 12px;
-        }
-    </style>
+select, input {
+    width: 100%;
+    padding: 16px;
+    margin: 12px 0;
+    background: #080b10;
+    color: white;
+    border: 1px solid #394858;
+    border-radius: 10px;
+    font-size: 15px;
+}
+
+.generate {
+    width: 100%;
+    padding: 17px;
+    margin-top: 15px;
+    background: #00e676;
+    color: #06120b;
+    border: none;
+    border-radius: 10px;
+    font-weight: bold;
+    font-size: 17px;
+    cursor: pointer;
+}
+
+#resultado {
+    margin-top: 20px;
+    color: #00e676;
+    line-height: 1.5;
+    overflow-wrap: anywhere;
+}
+
+.footer {
+    margin-top: 35px;
+    color: #788593;
+    font-size: 12px;
+}
+</style>
 </head>
 
 <body>
 
-    <div class="container">
+<div class="container">
 
-        <h1>MOCLIPS</h1>
+    <div class="logo">MOCLIPS</div>
 
-        <p class="subtitle">
-            Convierte tus videos largos en clips increíbles.
-        </p>
+    <p class="subtitle">
+        Tu inteligencia artificial para crear clips virales.
+    </p>
 
-        <input
-            type="url"
-            id="youtubeLink"
-            placeholder="Pega aquí tu enlace de YouTube"
-        >
+    <h2>¿Qué quieres convertir en clips?</h2>
 
-        <button onclick="procesarVideo()">
-            PROCESAR VIDEO
+    <div class="options">
+
+        <button class="option active"
+        id="grabado"
+        onclick="seleccionar('grabado')">
+            🎬 VIDEO GRABADO
         </button>
 
-        <div id="resultado"></div>
-
-        <div class="footer">
-            MOCLIPS © 2026
-        </div>
+        <button class="option"
+        id="directo"
+        onclick="seleccionar('directo')">
+            🔴 DIRECTO EN VIVO
+        </button>
 
     </div>
 
-    <script>
-        function procesarVideo() {
+    <h2>Selecciona la plataforma</h2>
 
-            const enlace = document
-                .getElementById("youtubeLink")
-                .value.trim();
+    <select id="plataforma">
+        <option value="YouTube">YouTube</option>
+        <option value="TikTok">TikTok</option>
+        <option value="Twitch">Twitch</option>
+    </select>
 
-            const resultado = document
-                .getElementById("resultado");
+    <input
+    type="url"
+    id="enlace"
+    placeholder="Pega aquí el enlace del video o directo">
 
-            if (!enlace) {
-                resultado.textContent =
-                    "Por favor, pega un enlace de YouTube.";
-                return;
-            }
+    <h2>¿Cuántos clips quieres?</h2>
 
-            try {
-                const url = new URL(enlace);
+    <select id="cantidad">
+        <option value="5">5 clips</option>
+        <option value="10">10 clips</option>
+        <option value="15">15 clips</option>
+        <option value="20">20 clips</option>
+        <option value="30">30 clips</option>
+        <option value="0">Todos los disponibles</option>
+    </select>
 
-                const esYouTube =
-                    url.hostname === "youtube.com" ||
-                    url.hostname === "www.youtube.com" ||
-                    url.hostname === "m.youtube.com" ||
-                    url.hostname === "youtu.be" ||
-                    url.hostname === "www.youtu.be";
+    <h2>Duración de cada clip</h2>
 
-                if (!esYouTube) {
-                    resultado.textContent =
-                        "El enlace no parece ser de YouTube.";
-                    return;
-                }
+    <select id="duracion">
+        <option value="60">60 segundos</option>
+    </select>
 
-                resultado.textContent =
-                    "¡Enlace recibido correctamente! MOCLIPS está listo para el siguiente paso.";
+    <button class="generate" onclick="procesar()">
+        GENERAR MIS CLIPS
+    </button>
 
-            } catch (error) {
-                resultado.textContent =
-                    "El enlace no es válido. Inténtalo nuevamente.";
-            }
+    <div id="resultado"></div>
+
+    <div class="footer">
+        MOCLIPS © 2026
+        <br>
+        Crea. Recorta. Comparte.
+    </div>
+
+</div>
+
+<script>
+
+let modo = "grabado";
+
+function seleccionar(tipo) {
+
+    modo = tipo;
+
+    document.getElementById("grabado")
+    .classList.toggle("active", tipo === "grabado");
+
+    document.getElementById("directo")
+    .classList.toggle("active", tipo === "directo");
+
+    document.getElementById("enlace").placeholder =
+    tipo === "directo"
+    ? "Pega el enlace del directo en vivo"
+    : "Pega el enlace del video";
+
+}
+
+function procesar() {
+
+    const enlace = document.getElementById("enlace").value.trim();
+
+    const plataforma = document.getElementById("plataforma").value;
+
+    const resultado = document.getElementById("resultado");
+
+    if (!enlace) {
+        resultado.textContent = "Pega un enlace primero.";
+        return;
+    }
+
+    try {
+
+        const url = new URL(enlace);
+
+        const dominios = {
+            YouTube: ["youtube.com", "www.youtube.com", "youtu.be", "m.youtube.com"],
+            TikTok: ["tiktok.com", "www.tiktok.com", "vm.tiktok.com"],
+            Twitch: ["twitch.tv", "www.twitch.tv"]
+        };
+
+        if (!dominios[plataforma].includes(url.hostname)) {
+            resultado.textContent =
+            "El enlace no corresponde a la plataforma seleccionada.";
+            return;
         }
-    </script>
+
+        resultado.textContent =
+        "¡Enlace recibido! Próximo paso: conectar la inteligencia artificial para analizar y generar tus clips.";
+
+    } catch (error) {
+
+        resultado.textContent = "El enlace no es válido.";
+
+    }
+
+}
+
+</script>
 
 </body>
 </html>
