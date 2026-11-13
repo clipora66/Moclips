@@ -3,10 +3,153 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MOCLIPS</title>
+    <title>MOCLIPS - Crea tus clips</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #080b10;
+            color: white;
+            text-align: center;
+            padding: 30px 18px;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 60px auto;
+            background: #121923;
+            padding: 30px 20px;
+            border-radius: 18px;
+            border: 1px solid #263342;
+        }
+
+        h1 {
+            font-size: 42px;
+            color: #00e676;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            color: #b8c2cc;
+            margin-bottom: 30px;
+        }
+
+        input {
+            width: 100%;
+            padding: 16px;
+            border-radius: 10px;
+            border: 1px solid #394858;
+            background: #080b10;
+            color: white;
+            font-size: 15px;
+            margin-bottom: 15px;
+        }
+
+        button {
+            width: 100%;
+            padding: 16px;
+            background: #00e676;
+            color: #06120b;
+            font-weight: bold;
+            font-size: 17px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+
+        button:active {
+            transform: scale(0.98);
+        }
+
+        #resultado {
+            margin-top: 22px;
+            color: #00e676;
+            line-height: 1.5;
+            overflow-wrap: anywhere;
+        }
+
+        .footer {
+            margin-top: 35px;
+            color: #788593;
+            font-size: 12px;
+        }
+    </style>
 </head>
+
 <body>
-    <h1>MOCLIPS</h1>
-    <p>Tu plataforma de creación de clips está en construcción.</p>
+
+    <div class="container">
+
+        <h1>MOCLIPS</h1>
+
+        <p class="subtitle">
+            Convierte tus videos largos en clips increíbles.
+        </p>
+
+        <input
+            type="url"
+            id="youtubeLink"
+            placeholder="Pega aquí tu enlace de YouTube"
+        >
+
+        <button onclick="procesarVideo()">
+            PROCESAR VIDEO
+        </button>
+
+        <div id="resultado"></div>
+
+        <div class="footer">
+            MOCLIPS © 2026
+        </div>
+
+    </div>
+
+    <script>
+        function procesarVideo() {
+
+            const enlace = document
+                .getElementById("youtubeLink")
+                .value.trim();
+
+            const resultado = document
+                .getElementById("resultado");
+
+            if (!enlace) {
+                resultado.textContent =
+                    "Por favor, pega un enlace de YouTube.";
+                return;
+            }
+
+            try {
+                const url = new URL(enlace);
+
+                const esYouTube =
+                    url.hostname === "youtube.com" ||
+                    url.hostname === "www.youtube.com" ||
+                    url.hostname === "m.youtube.com" ||
+                    url.hostname === "youtu.be" ||
+                    url.hostname === "www.youtu.be";
+
+                if (!esYouTube) {
+                    resultado.textContent =
+                        "El enlace no parece ser de YouTube.";
+                    return;
+                }
+
+                resultado.textContent =
+                    "¡Enlace recibido correctamente! MOCLIPS está listo para el siguiente paso.";
+
+            } catch (error) {
+                resultado.textContent =
+                    "El enlace no es válido. Inténtalo nuevamente.";
+            }
+        }
+    </script>
+
 </body>
 </html>
